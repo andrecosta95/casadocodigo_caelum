@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import almekh.com.example.android7281.casadocodigo.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +63,8 @@ public class DetalheLivroFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         Bundle arguments = getArguments();
-        livro = (Livro) arguments.getSerializable("Livro");
+        livro = (Livro) arguments.getSerializable("livro");
+        populaCamposCom(livro);
         return view;
     }
 
@@ -90,5 +93,7 @@ public class DetalheLivroFragment extends Fragment {
 
         String textoComprarAmbos = String.format("Compar Ambos - R$ %.2f", livro.getValorDoisJuntos());
         botaoComprarAmbos.setText(textoComprarAmbos);
+
+        Picasso.with(getContext()).load(livro.getUrlFoto()).placeholder(R.drawable.livro).into(foto);
     }
 }

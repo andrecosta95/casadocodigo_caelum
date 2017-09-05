@@ -1,8 +1,11 @@
 package almekh.com.example.android7281.casadocodigo.server;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import almekh.com.example.android7281.casadocodigo.delegate.LivrosDelegate;
+import almekh.com.example.android7281.casadocodigo.event.LivroEvent;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,12 +20,7 @@ import almekh.com.example.android7281.casadocodigo.converter.LivroServiceConvert
 public class WebClient {
 
     private static final String SERVER_URL = "http://cdcmob.herokuapp.com/";
-    private LivrosDelegate delegate;
-    
-    public WebClient(LivrosDelegate delegate){
-        this.delegate = delegate;
-    }
-    
+
     public void getLivros() {
 
         Retrofit client = new Retrofit.Builder()
@@ -37,12 +35,12 @@ public class WebClient {
         call.enqueue(new Callback<List<Livro>>() {
             @Override
             public void onResponse(Call<List<Livro>> call, Response<List<Livro>> response) {
-                delegate.lidaComSucesso(response.body());
+                EventBus.getDefault().post(new LivroEvent(response.body()));
             }
 
             @Override
             public void onFailure(Call<List<Livro>> call, Throwable t) {
-                delegate.lidaComErro(t);
+                EventBus.getDefault().post(t);
             }
         });
 

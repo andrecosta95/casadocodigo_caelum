@@ -12,7 +12,4 @@ public interface LivrosDelegate {
 
     public void lidaComLivrosSelecionado(Livro livro);
 
-    public void lidaComSucesso(List<Livro> livro);
-
-    public void lidaComErro(Throwable erro);
 }

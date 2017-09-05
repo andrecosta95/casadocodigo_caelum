@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import almekh.com.example.android7281.casadocodigo.R;
@@ -68,6 +70,10 @@ public class LivroAdapter extends RecyclerView.Adapter {
         Livro livro = livros.get(position);
         viewHolder.nome.setText(livro.getNome());
 
+        Picasso.with(viewHolder.foto.getContext())
+                .load(livro.getUrlFoto())
+                .placeholder(R.drawable.livro)
+                .into(viewHolder.foto);
     }
 
     @Override
