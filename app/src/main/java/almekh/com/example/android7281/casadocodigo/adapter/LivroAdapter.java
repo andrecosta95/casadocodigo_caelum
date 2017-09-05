@@ -1,4 +1,4 @@
-package utils;
+package almekh.com.example.android7281.casadocodigo.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,10 +10,11 @@ import android.widget.TextView;
 import java.util.List;
 
 import almekh.com.example.android7281.casadocodigo.R;
+import almekh.com.example.android7281.casadocodigo.model.Livro;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import delegate.LivrosDelegate;
+import almekh.com.example.android7281.casadocodigo.delegate.LivrosDelegate;
 
 /**
  * Created by android7281 on 04/09/17.

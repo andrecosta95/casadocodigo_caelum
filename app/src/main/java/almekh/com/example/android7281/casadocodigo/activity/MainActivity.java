@@ -1,4 +1,4 @@
-package almekh.com.example.android7281.casadocodigo;
+package almekh.com.example.android7281.casadocodigo.activity;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -6,12 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import delegate.LivrosDelegate;
-import fragment.DetalheLivroFragment;
-import fragment.ListaLivrosFragment;
-import utils.Livro;
+import java.util.List;
+
+import almekh.com.example.android7281.casadocodigo.R;
+import almekh.com.example.android7281.casadocodigo.server.WebClient;
+import almekh.com.example.android7281.casadocodigo.delegate.LivrosDelegate;
+import almekh.com.example.android7281.casadocodigo.fragment.DetalheLivroFragment;
+import almekh.com.example.android7281.casadocodigo.fragment.ListaLivrosFragment;
+import almekh.com.example.android7281.casadocodigo.model.Livro;
 
 public class MainActivity extends AppCompatActivity implements LivrosDelegate, FragmentManager.OnBackStackChangedListener{
+
+    private ListaLivrosFragment listaLivrosFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,10 +25,14 @@ public class MainActivity extends AppCompatActivity implements LivrosDelegate, F
         setContentView(R.layout.activity_main);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_principal, new ListaLivrosFragment());
+        listaLivrosFragment = new ListaLivrosFragment();
+        transaction.replace(R.id.frame_principal, listaLivrosFragment);
         transaction.commit();
 
+        new WebClient(this).getLivros();
+
         getSupportFragmentManager().addOnBackStackChangedListener(this);
+        mostrarVoltar();
     }
 
     @Override
@@ -32,6 +42,16 @@ public class MainActivity extends AppCompatActivity implements LivrosDelegate, F
         transaction.replace(R.id.frame_principal, detalheLivroFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    @Override
+    public void lidaComSucesso(List<Livro> livro) {
+        listaLivrosFragment.populaListaCom(livro);
+    }
+
+    @Override
+    public void lidaComErro(Throwable erro) {
+        Toast.makeText(this, "Não foi possível carregar os livros...", Toast.LENGTH_SHORT).show();
     }
 
     private DetalheLivroFragment criaDetalhesCom(Livro livro) {

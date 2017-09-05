@@ -1,5 +1,4 @@
-package fragment;
-
+package almekh.com.example.android7281.casadocodigo.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,15 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import almekh.com.example.android7281.casadocodigo.R;
+import almekh.com.example.android7281.casadocodigo.adapter.LivroAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import utils.Autor;
-import utils.Livro;
-import utils.LivroAdapter;
+import almekh.com.example.android7281.casadocodigo.model.Livro;
 
 /**
  * Created by android7281 on 04/09/17.
@@ -27,26 +24,27 @@ import utils.LivroAdapter;
 
 public class ListaLivrosFragment extends Fragment {
 
-    @BindView(R.id.lista_livros)
-    RecyclerView recycler;
+    private List<Livro> livros = new ArrayList<>();
 
+    @BindView(R.id.lista_livros)
+    RecyclerView recyclerView;
+
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_lista_livros, container, false);
 
-        List<Livro> livros = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            Autor autor = new Autor();
-            autor.setNome("Autor " + i);
-            Livro livro = new Livro("Livro " + i, "Descrição " + i, Arrays.asList(autor));
-            livros.add(livro);
-        }
-
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.lista_livros);
+        ButterKnife.bind(this, view);
         recyclerView.setAdapter(new LivroAdapter(livros));
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
-        ButterKnife.bind(this, view);
+
         return view;
+    }
+
+    public void populaListaCom(List<Livro> livros) {
+        this.livros.clear();
+        this.livros.addAll(livros);
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
 }

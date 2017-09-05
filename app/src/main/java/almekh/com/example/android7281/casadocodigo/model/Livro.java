@@ -1,7 +1,9 @@
-package utils;
+package almekh.com.example.android7281.casadocodigo.model;
 
         import java.io.Serializable;
         import java.util.List;
+
+        import almekh.com.example.android7281.casadocodigo.model.Autor;
 
 /**
  * Created by android7281 on 04/09/17.
@@ -24,6 +26,10 @@ public class Livro implements Serializable{
     public Livro(String livro, String descricao, List<Autor> autores) {
         this.nome = livro;
         this.descricao = descricao;
+    }
+
+    public Livro() {
+
     }
 
     public long getId() {

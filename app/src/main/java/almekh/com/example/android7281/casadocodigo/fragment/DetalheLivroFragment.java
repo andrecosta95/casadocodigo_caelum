@@ -1,4 +1,4 @@
-package fragment;
+package almekh.com.example.android7281.casadocodigo.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,8 +13,8 @@ import android.widget.TextView;
 import almekh.com.example.android7281.casadocodigo.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import utils.Autor;
-import utils.Livro;
+import almekh.com.example.android7281.casadocodigo.model.Autor;
+import almekh.com.example.android7281.casadocodigo.model.Livro;
 
 /**
  * Created by android7281 on 04/09/17.
