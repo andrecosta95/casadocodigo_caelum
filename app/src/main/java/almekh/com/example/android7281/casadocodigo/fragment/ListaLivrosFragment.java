@@ -14,6 +14,8 @@ import java.util.List;
 
 import almekh.com.example.android7281.casadocodigo.R;
 import almekh.com.example.android7281.casadocodigo.adapter.LivroAdapter;
+import almekh.com.example.android7281.casadocodigo.event.EndlessListListener;
+import almekh.com.example.android7281.casadocodigo.server.WebClient;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import almekh.com.example.android7281.casadocodigo.model.Livro;
@@ -42,9 +44,15 @@ public class ListaLivrosFragment extends Fragment {
         return view;
     }
 
-    public void populaListaCom(List<Livro> livros) {
-        this.livros.clear();
+    public void populaListaCom(final List<Livro> livros) {
+        //this.livros.clear();
         this.livros.addAll(livros);
         recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.addOnScrollListener(new EndlessListListener() {
+            @Override
+            protected void carregaMaisItens() {
+                new WebClient().getLivros(livros.size(), 10);
+            }
+        });
     }
 }
