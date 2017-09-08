@@ -9,14 +9,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import javax.inject.Inject;
+
+import almekh.com.example.android7281.casadocodigo.CasaDoCodigoApplication;
 import almekh.com.example.android7281.casadocodigo.R;
+import almekh.com.example.android7281.casadocodigo.model.Carrinho;
+import almekh.com.example.android7281.casadocodigo.model.Item;
+import almekh.com.example.android7281.casadocodigo.model.TipoDeCompra;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import almekh.com.example.android7281.casadocodigo.model.Autor;
 import almekh.com.example.android7281.casadocodigo.model.Livro;
+import butterknife.OnClick;
 
 /**
  * Created by android7281 on 04/09/17.
@@ -54,6 +62,9 @@ public class DetalheLivroFragment extends Fragment {
     @BindView(R.id.detalhes_livro_isbn)
     TextView isbn;
 
+    @Inject
+    Carrinho carrinho;
+
     private Livro livro;
 
     @Nullable
@@ -65,6 +76,10 @@ public class DetalheLivroFragment extends Fragment {
         Bundle arguments = getArguments();
         livro = (Livro) arguments.getSerializable("livro");
         populaCamposCom(livro);
+
+        CasaDoCodigoApplication app = (CasaDoCodigoApplication) getActivity().getApplication();
+        app.getComponent().inject(this);
+
         return view;
     }
 
@@ -95,5 +110,23 @@ public class DetalheLivroFragment extends Fragment {
         botaoComprarAmbos.setText(textoComprarAmbos);
 
         Picasso.with(getContext()).load(livro.getUrlFoto()).placeholder(R.drawable.livro).into(foto);
+    }
+
+    @OnClick(R.id.detalhes_livro_comprar_fisico)
+    public void comprarFisico() {
+        Toast.makeText(getActivity(), "Livro adicionado ao carrinho!", Toast.LENGTH_SHORT).show();
+        carrinho.adiciona(new Item(livro, TipoDeCompra.FISICO));
+    }
+
+    @OnClick(R.id.detalhes_livro_comprar_ebook)
+    public void comprarEbook() {
+        Toast.makeText(getActivity(), "Livro adicionado ao carrinho!", Toast.LENGTH_SHORT).show();
+        carrinho.adiciona(new Item(livro, TipoDeCompra.VIRTUAL));
+    }
+
+    @OnClick(R.id.detalhes_livro_comprar_ambos)
+    public void comprarAmbos() {
+        Toast.makeText(getActivity(), "Livro adicionado ao carrinho!", Toast.LENGTH_SHORT).show();
+        carrinho.adiciona(new Item(livro, TipoDeCompra.JUNTOS));
     }
 }

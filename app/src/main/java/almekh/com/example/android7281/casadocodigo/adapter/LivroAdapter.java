@@ -25,16 +25,18 @@ import almekh.com.example.android7281.casadocodigo.delegate.LivrosDelegate;
 public class LivroAdapter extends RecyclerView.Adapter {
 
     private List<Livro> livros;
+    private boolean listaSimples;
 
-    public LivroAdapter(List<Livro> livros) {
+    public LivroAdapter(List<Livro> livros, boolean listaSimples) {
         this.livros = livros;
+        this.listaSimples = listaSimples;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         int tipoDeLayout = R.layout.item_livro_par;
 
-        if(viewType % 2 != 0) {
+        if(viewType % 2 != 0 && listaSimples) {
             tipoDeLayout = R.layout.item_livro_impar;
         }
         View view = LayoutInflater.from(parent.getContext()).inflate(tipoDeLayout, parent, false);

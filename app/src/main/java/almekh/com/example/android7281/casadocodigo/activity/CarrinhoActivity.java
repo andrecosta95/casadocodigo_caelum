@@ -7,6 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
+import almekh.com.example.android7281.casadocodigo.CasaDoCodigoApplication;
 import almekh.com.example.android7281.casadocodigo.R;
 import almekh.com.example.android7281.casadocodigo.adapter.ItensAdapter;
 import almekh.com.example.android7281.casadocodigo.model.Carrinho;
@@ -26,17 +29,22 @@ public class CarrinhoActivity extends AppCompatActivity{
     @BindView(R.id.valor_carrinho)
     TextView valorTotal;
 
-    private Carrinho carrinho = new Carrinho();
+    //private Carrinho carrinho;
+    @Inject
+    Carrinho carrinho;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carrinho);
         ButterKnife.bind(this);
+
+        CasaDoCodigoApplication app = (CasaDoCodigoApplication) getApplication();
+        app.getComponent().inject(this);
     }
 
     public void carregaLista() {
-        listaItens.setAdapter(new ItensAdapter(carrinho.getItens(), this));
+        listaItens.setAdapter(new ItensAdapter(carrinho.getItens()));
         listaItens.setLayoutManager(new LinearLayoutManager(this));
 
         double total = 0;

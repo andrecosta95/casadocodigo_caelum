@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -25,6 +27,7 @@ import almekh.com.example.android7281.casadocodigo.model.Livro;
 public class MainActivity extends AppCompatActivity implements LivrosDelegate, FragmentManager.OnBackStackChangedListener{
 
     private ListaLivrosFragment listaLivrosFragment;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements LivrosDelegate, F
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
         mostrarVoltar();
+
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -108,6 +113,11 @@ public class MainActivity extends AppCompatActivity implements LivrosDelegate, F
                  Intent vaiParaCarrinho = new Intent(this, CarrinhoActivity.class);
                  startActivity(vaiParaCarrinho);
                  return true;
+             case R.id.logout:
+                 mAuth.signOut();
+                 Intent logout = new Intent(this, LoginActivity.class);
+                 startActivity(logout);
+                 finish();
              default:
                  return super.onOptionsItemSelected(item);
          }
